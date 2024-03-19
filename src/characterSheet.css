@@ -1,0 +1,91 @@
+@font-face {
+  font-family: StarWars;
+  src: url('./data/Starjedi.ttf') format('truetype');
+}
+.character-sheet {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f0f0;
+  font-family: StarWars;
+  }
+  
+  .page-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  
+  .page-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .text-overlay {
+    position: absolute;
+    font-size: 20px;
+    color: black;
+  }
+  
+  .name {
+    top: 2%;
+    left: 5%;
+  }
+  
+  .species {
+    top: 4.5%;
+    left: 10%;
+  }
+  
+  .career {
+    top: 6.8%;
+    left: 10%;
+  }
+
+  .force-rating {
+    top: 2.5%;
+    left: 65.5%;
+    font-size: 50px;
+  }
+  
+  .specializations {
+    top: 9%;
+    left: 16%;
+  }
+
+  .brawn {
+    top: 24%;
+    left: 9%;
+    font-size: 40px;
+  }
+
+  .agility {
+    top: 24%;
+    left: 25%;
+    font-size: 40px;
+  }
+
+  .intellect {
+    top: 24%;
+    left: 40.5%;
+    font-size: 40px;
+  }
+
+  .cunning {
+    top: 24%;
+    left: 56.5%;
+    font-size: 40px;
+  }
+
+  .willpower {
+    top: 24%;
+    left: 72%;
+    font-size: 40px;
+  }
+
+  .presence {
+    top: 24%;
+    left: 88%;
+    font-size: 40px;
+  }

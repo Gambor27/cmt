@@ -1,17 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from 'react-dom';
+import './characterSheet.css'
+import page1 from './Page1.png'
+import page2 from './data/Page2.png'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const CharacterSheet = () => {
+    return(
+        <div className="character-sheet">
+            <div className="page-container">
+                <img src={page1} alt="Sheet" className="page-image" />
+                <div className="text-overlay name">Larrel Kent</div>
+                <div className="text-overlay species">Human</div>
+                <div className="text-overlay career">Consular</div>
+                <div className="text-overlay specializations">Healer</div>
+                <div className="text-overlay force-rating">1</div>
+                <div className="text-overlay brawn">2</div>
+                <div className="text-overlay agility">2</div>
+                <div className="text-overlay intellect">2</div>
+                <div className="text-overlay cunning">2</div>
+                <div className="text-overlay willpower">2</div>
+                <div className="text-overlay presence">2</div>
+            </div>
+        </div>
+    )
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(
+    <React.StrictMode>
+      <CharacterSheet />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+
+export default CharacterSheet()
