@@ -9,11 +9,6 @@ import page1 from './Page1.png'
 
 function CharacterSheet() {
     const [brawn, updateBrawn] = useState(1)
-    const [agility, updateAgility] = useState(1)
-    const [intellect, updateIntellect] = useState(1)
-    const [cunning, updateCunning] = useState(1)
-    const [willpower, updateWillpower] = useState(1)
-    const [presence, updatePresence] = useState(1)
 
     function updateCharacteristic(stat, updateStat) {
         const newStat = stat + 1
@@ -30,12 +25,7 @@ function CharacterSheet() {
                 <div className="text-overlay career">{BasicText('')}</div>
                 <div className="text-overlay specializations">{BasicText('')}</div>
                 <div className="text-overlay force-rating">1</div>
-                <div className="text-overlay brawn" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(brawn, updateBrawn)}>{brawn}</div>
-                <div className="text-overlay agility" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(agility, updateAgility)}>{agility}</div>
-                <div className="text-overlay intellect" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(intellect, updateIntellect)}>{intellect}</div>
-                <div className="text-overlay cunning" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(cunning, updateCunning)}>{cunning}</div>
-                <div className="text-overlay willpower" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(willpower, updateWillpower)}>{willpower}</div>
-                <div className="text-overlay presence"style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(presence, updatePresence)}>{presence}</div> 
+                <div className="text-overlay brawn" style={{ userSelect: "none" }} onClick = {() => console.log('')}>1</div>
             </div>
         </div>
     )

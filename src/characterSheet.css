@@ -28,18 +28,22 @@
     color: black;
   }
   
+  .submit{
+    top: 0%;
+    left: 50%;
+  }
   .name {
-    top: 2%;
+    top: 1.6%;
     left: 5%;
   }
   
   .species {
-    top: 4.5%;
+    top: 3.7%;
     left: 10%;
   }
   
   .career {
-    top: 6.8%;
+    top: 6%;
     left: 10%;
   }
 
@@ -50,7 +54,7 @@
   }
   
   .specializations {
-    top: 9%;
+    top: 8.3%;
     left: 16%;
   }
 
