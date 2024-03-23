@@ -1,19 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from 'react-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
+import Select from '@mui/material/Select';
 import './characterSheet.css'
 import page1 from './Page1.png'
+import { MenuItem } from "@mui/material";
 //import page2 from './data/Page2.png'
 
 function CharacterSheet() {
-    const [brawn, updateBrawn] = useState(1)
-    const [agility, updateAgility] = useState(1)
-    const [intellect, updateIntellect] = useState(1)
-    const [cunning, updateCunning] = useState(1)
-    const [willpower, updateWillpower] = useState(1)
-    const [presence, updatePresence] = useState(1)
+    const [brawn, updateBrawn] = useState(0)
+    const [agility, updateAgility] = useState(0)
+    const [intellect, updateIntellect] = useState(0)
+    const [cunning, updateCunning] = useState(0)
+    const [willpower, updateWillpower] = useState(0)
+    const [presence, updatePresence] = useState(0)
+    const [name, updateName] = useState('')
+    const [species, updateSpecies] = useState('')
+    const [career, updateCareer] = useState('')
+
+    const speciesList = ['Cerean', 'Human', 'Kel Dor', 'Mirialan', 'Nautolan', 'Togruta', 'Twi\'lek', 'Zabrak']
+    const careerList = ['Consular', 'Guardian', 'Mystic', 'Seeker', 'Sentinel', 'Warrior']
+    
+    useEffect(() => {determineCharacteristics()}, [species]);
+
+    function determineCharacteristics() {
+        const characteristicUpdaters = [updateBrawn, updateAgility, updateIntellect, updateCunning, updateWillpower, updatePresence]
+        for (let update of characteristicUpdaters) {
+            let baseStat = 2
+            if (species === 'Cerean') {
+                if (update === updateAgility) {
+                    baseStat = 1} 
+                if (update === updateIntellect) {
+                    baseStat = 3}
+            } if (species === 'Kel Dor') {
+                if (update === updateBrawn) {
+                    baseStat = 1} 
+                if (update === updateWillpower) {
+                    baseStat = 3}
+            } if (species === 'Mirialan') {
+                if (update === updateAgility) {
+                    baseStat = 3}
+                if (update === updateCunning) {
+                    baseStat = 1}                
+            } if (species === 'Nautolan') {
+                if (update === updateWillpower) {
+                    baseStat = 1}
+                if (update === updateBrawn) {
+                    baseStat = 3}
+            } if (species === 'Togruta') {
+                if (update === updateBrawn) {
+                    baseStat = 1}
+                if (update === updateCunning) {
+                    baseStat = 3} 
+            } if (species === 'Twi\'lek') {
+                if (update === updateBrawn) {
+                    baseStat = 1}
+                if (update === updatePresence) {
+                    baseStat = 3}
+            } if (species === 'Zabrak') {
+                if (update === updatePresence) {
+                    baseStat = 1}
+                if (update === updateWillpower) {
+                    baseStat = 3}
+            }
+            update(baseStat)
+        }
+    }
+    
+    function handleSpeciesSelect(choice){
+        updateSpecies(choice)
+    }
 
     function updateCharacteristic(stat, updateStat) {
         const newStat = stat + 1
@@ -24,11 +82,11 @@ function CharacterSheet() {
         <div className="character-sheet">
             <div className="page-container">
                 <img src={page1} alt="Sheet" className="page-image" />
-                <button className="text-overlay submit" onClick = {() => console.log('click')}>Save</button>
-                <div className="text-overlay name">{BasicText('')}</div>
-                <div className="text-overlay species">{BasicText('')}</div>
-                <div className="text-overlay career">{BasicText('')}</div>
-                <div className="text-overlay specializations">{BasicText('')}</div>
+                <button className="text-overlay submit" onClick = {() => console.log(name)}>Save</button>
+                <div className="text-overlay name"> <TextField variant = "standard" onChange = {(event) => updateName(event.target.value)} /></div>
+                <div className="text-overlay species"><Dropdown value={species} options={speciesList} onChange= {(event) => handleSpeciesSelect(event.target.value)}></Dropdown></div>
+                <div className="text-overlay career"><Dropdown value={career} options={careerList} onChange= {(event) => updateCareer(event.target.value)}></Dropdown></div>
+                <div className="text-overlay specializations">Healer</div>
                 <div className="text-overlay force-rating">1</div>
                 <div className="text-overlay brawn" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(brawn, updateBrawn)}>{brawn}</div>
                 <div className="text-overlay agility" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(agility, updateAgility)}>{agility}</div>
@@ -45,18 +103,14 @@ function BasicButton(input_text) {
     <Button variant="contained">{input_text}</Button>
     )
 }
-function BasicText(input_text) {
+function Dropdown({value, options, onChange}) {
     return (
-        <Box
-        component = 'form'
-        sx={{
-            '& > :not(style)': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-        <TextField id="standard-basic" label= {input_text} variant="standard" />
-    </Box>
+        <Box sx={{ minWidth: 120 }}>
+        <Select value={value} onChange={onChange} variant="standard">
+        {options.map((option) => (
+            <MenuItem key={option} value={option}>{option}</MenuItem>))}
+        </Select>
+        </Box>
     )
 }
 ReactDOM.render(
