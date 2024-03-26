@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from 'react-dom';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button'
-import Select from '@mui/material/Select';
+import React, { useState, useEffect } from "react"
+import ReactDOM from 'react-dom'
 import './characterSheet.css'
-import page1 from './Page1.png'
-import { MenuItem } from "@mui/material";
+import page1 from './data/Page1.png'
+import { MenuItem, Button, Dialog, DialogTitle, DialogContent, FormControlLabel, Checkbox, Box, TextField, Select } from "@mui/material"
 //import page2 from './data/Page2.png'
 
 function CharacterSheet() {
@@ -19,9 +15,11 @@ function CharacterSheet() {
     const [name, updateName] = useState('')
     const [species, updateSpecies] = useState('')
     const [career, updateCareer] = useState('')
+    const [specialization, updateSpecialization] = useState([])
 
     const speciesList = ['Cerean', 'Human', 'Kel Dor', 'Mirialan', 'Nautolan', 'Togruta', 'Twi\'lek', 'Zabrak']
     const careerList = ['Consular', 'Guardian', 'Mystic', 'Seeker', 'Sentinel', 'Warrior']
+    const speclist = ['Healer','Niman Disciple']
     
     useEffect(() => {determineCharacteristics()}, [species]);
 
@@ -78,15 +76,21 @@ function CharacterSheet() {
         updateStat(newStat)
         return stat
     }
+
+    function handleAddSpecialization(newSpec) {
+        const newSpecList = [...specialization, newSpec]
+        updateSpecialization(newSpecList)
+    }
+
     return(
         <div className="character-sheet">
             <div className="page-container">
                 <img src={page1} alt="Sheet" className="page-image" />
                 <button className="text-overlay submit" onClick = {() => console.log(name)}>Save</button>
                 <div className="text-overlay name"> <TextField variant = "standard" onChange = {(event) => updateName(event.target.value)} /></div>
-                <div className="text-overlay species"><Dropdown value={species} options={speciesList} onChange= {(event) => handleSpeciesSelect(event.target.value)}></Dropdown></div>
-                <div className="text-overlay career"><Dropdown value={career} options={careerList} onChange= {(event) => updateCareer(event.target.value)}></Dropdown></div>
-                <div className="text-overlay specializations">Healer</div>
+                <div className="text-overlay species"><Dropdown value={species} options={speciesList} onChange= {(event) => handleSpeciesSelect(event.target.value)} /></div>
+                <div className="text-overlay career"><Dropdown value={career} options={careerList} onChange= {(event) => updateCareer(event.target.value)} /></div>
+                <div className="text-overlay specializations"><CheckboxPopup value={specialization} options={speclist} onChange= {(event) => handleAddSpecialization(event)} /></div>
                 <div className="text-overlay force-rating">1</div>
                 <div className="text-overlay brawn" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(brawn, updateBrawn)}>{brawn}</div>
                 <div className="text-overlay agility" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(agility, updateAgility)}>{agility}</div>
@@ -98,10 +102,47 @@ function CharacterSheet() {
         </div>
     )
 }
-function BasicButton(input_text) {
+
+function CheckboxPopup({value, options, onChange}) {
+    const [open, setOpen] = useState(false)
+    const handleOpen = () => {
+        setOpen(true)
+    }
+    const handleClose = () => {
+        setOpen(false)
+    }
+    const handleChange = (event) => {
+        const selectedOptions = event.target.value;
+        onChange(selectedOptions)
+    }
+    const display = value.join(" ")
+
     return (
-    <Button variant="contained">{input_text}</Button>
-    )
+        <div>
+          <Button variant="standard" onClick={handleOpen}>
+            {display}
+            </Button>
+    
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Select Options</DialogTitle>
+            <DialogContent>
+              {options.map((option) => (
+                <FormControlLabel
+                  key={option}
+                  control={
+                    <Checkbox
+                      value={option}
+                      checked={value.includes(option)}
+                      onChange={handleChange}
+                    />
+                  }
+                  label={option}
+                />
+              ))}
+            </DialogContent>
+          </Dialog>
+        </div>
+      )   
 }
 function Dropdown({value, options, onChange}) {
     return (
