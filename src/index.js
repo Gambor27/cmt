@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import ReactDOM from 'react-dom'
 import './characterSheet.css'
 import page1 from './data/Page1.png'
+import Niman from './data/Niman.png'
+import Healer from './data/Healer.png'
 import { MenuItem, Button, Dialog, DialogTitle, DialogContent, FormControlLabel, Checkbox, Box, TextField, Select } from "@mui/material"
 //import page2 from './data/Page2.png'
 
@@ -20,6 +22,7 @@ function CharacterSheet() {
     const speciesList = ['Cerean', 'Human', 'Kel Dor', 'Mirialan', 'Nautolan', 'Togruta', 'Twi\'lek', 'Zabrak']
     const careerList = ['Consular', 'Guardian', 'Mystic', 'Seeker', 'Sentinel', 'Warrior']
     const speclist = ['Healer','Niman Disciple']
+    const specimages = {'Healer':Healer,'Niman Disciple':Niman}
     
     useEffect(() => {determineCharacteristics()}, [species]);
 
@@ -77,9 +80,17 @@ function CharacterSheet() {
         return stat
     }
 
-    function handleAddSpecialization(newSpec) {
-        const newSpecList = [...specialization, newSpec]
-        updateSpecialization(newSpecList)
+    function handleUpdateSpecialization(event) {
+        const selectedOption = event.target.value
+        const isChecked = event.target.checked
+        let updatedList = []
+
+        if (isChecked) {
+            updatedList = [...specialization, selectedOption]
+        } else {
+            updatedList = specialization.filter((option) => (option) !== selectedOption)
+        }
+        updateSpecialization(updatedList)
     }
 
     return(
@@ -90,7 +101,7 @@ function CharacterSheet() {
                 <div className="text-overlay name"> <TextField variant = "standard" onChange = {(event) => updateName(event.target.value)} /></div>
                 <div className="text-overlay species"><Dropdown value={species} options={speciesList} onChange= {(event) => handleSpeciesSelect(event.target.value)} /></div>
                 <div className="text-overlay career"><Dropdown value={career} options={careerList} onChange= {(event) => updateCareer(event.target.value)} /></div>
-                <div className="text-overlay specializations"><CheckboxPopup value={specialization} options={speclist} onChange= {(event) => handleAddSpecialization(event)} /></div>
+                <div className="text-overlay specializations"><CheckboxPopup value={specialization} options={speclist} onChange= {(event) => handleUpdateSpecialization(event)} /></div>
                 <div className="text-overlay force-rating">1</div>
                 <div className="text-overlay brawn" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(brawn, updateBrawn)}>{brawn}</div>
                 <div className="text-overlay agility" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(agility, updateAgility)}>{agility}</div>
@@ -98,6 +109,7 @@ function CharacterSheet() {
                 <div className="text-overlay cunning" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(cunning, updateCunning)}>{cunning}</div>
                 <div className="text-overlay willpower" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(willpower, updateWillpower)}>{willpower}</div>
                 <div className="text-overlay presence"style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(presence, updatePresence)}>{presence}</div> 
+                <div>{specialization.map((spec => (<img key={spec} src={specimages[spec]} alt={spec} />)))} </div>
             </div>
         </div>
     )
@@ -105,6 +117,7 @@ function CharacterSheet() {
 
 function CheckboxPopup({value, options, onChange}) {
     const [open, setOpen] = useState(false)
+    const [previous, setPrevious] = useState(value)
     const handleOpen = () => {
         setOpen(true)
     }
@@ -112,14 +125,16 @@ function CheckboxPopup({value, options, onChange}) {
         setOpen(false)
     }
     const handleChange = (event) => {
-        const selectedOptions = event.target.value;
-        onChange(selectedOptions)
+        if (previous.includes(event.target.value)) {
+            return
+        }
+        onChange(event)
     }
-    const display = value.join(" ")
+    const display = value.join(", ")
 
     return (
         <div>
-          <Button variant="standard" onClick={handleOpen}>
+          <Button variant="contained" onClick={handleOpen}>
             {display}
             </Button>
     

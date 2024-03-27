@@ -3,8 +3,7 @@
   src: url('./data/Starjedi.ttf') format('truetype');
 }
 .character-sheet {
-  width: 100%;
-  max-width: 800px;
+  width: 800px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f0f0f0;
@@ -12,7 +11,7 @@
   }
   
   .page-container {
-    position: relative;
+    position: absolute;
     display: inline-block;
     margin-bottom: 20px;
   }
@@ -29,22 +28,22 @@
   }
   
   .submit{
-    top: 0%;
-    left: 50%;
+    top: 0px;
+    left: 400px;
   }
   .name {
-    top: 1.6%;
-    left: 5%;
+    top: 30px;
+    left: 40px;
   }
   
   .species {
-    top: 3.7%;
-    left: 10%;
+    top: 49px;
+    left: 80px;
   }
   
   .career {
-    top: 6%;
-    left: 10%;
+    top: 77px;
+    left: 80px;
   }
 
   .force-rating {
