@@ -109,7 +109,7 @@ function CharacterSheet() {
                 <div className="text-overlay cunning" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(cunning, updateCunning)}>{cunning}</div>
                 <div className="text-overlay willpower" style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(willpower, updateWillpower)}>{willpower}</div>
                 <div className="text-overlay presence"style={{ userSelect: "none" }} onClick = {() => updateCharacteristic(presence, updatePresence)}>{presence}</div> 
-                <div>{specialization.map((spec => (<img key={spec} src={specimages[spec]} alt={spec} />)))} </div>
+                <div className="specialization-container">{specialization.map((spec => (<img key={spec} src={specimages[spec]} alt={spec} className="specialization-image" />)))} </div>
             </div>
         </div>
     )
@@ -134,8 +134,8 @@ function CheckboxPopup({value, options, onChange}) {
 
     return (
         <div>
-          <Button variant="contained" onClick={handleOpen}>
-            {display}
+          <Button variant="standard" onClick={handleOpen}>
+            {display ? display : "Add Specialization"}
             </Button>
     
           <Dialog open={open} onClose={handleClose}>
